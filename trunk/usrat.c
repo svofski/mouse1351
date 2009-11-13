@@ -75,4 +75,4 @@ void SIG_UART_RECV( void ) {
 	rx_buffer_in = (rx_buffer_in + 1) % RX_BUFFER_SIZE;
 }
 
-// $Id: usrat.c,v 1.3 2006/05/30 09:03:52 svo Exp $
+// $Id$
