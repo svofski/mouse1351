@@ -13,4 +13,4 @@ uint8_t uart_getc();
 
 #endif
 
-// $Id: usrat.h,v 1.2 2006/05/29 23:11:41 svo Exp $
+// $Id$
