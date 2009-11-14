@@ -6,6 +6,8 @@
 #define RX_BUFFER_SIZE	4					//!< USART RX buffer length
 
 void usart_init(uint16_t baudrate);
+void usart_stop();
+
 int uart_putchar(char data);
 int uart_getchar();
 uint8_t uart_available(void);

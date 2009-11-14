@@ -120,7 +120,12 @@ int main() {
     
     potmouse_start(joymode);    
     potmouse_movt(0,0,0); 
-        
+    
+    // usart seems to be capable of giving trouble when left disconnected
+    // if no characters appear in buffer by this moment, disable it 
+    // completely just in case
+    if (!uart_available()) usart_stop();
+
     printf_P(PSTR("hjkl to move, space = leftclick\n"));
     
     for(i = 0;;) {
