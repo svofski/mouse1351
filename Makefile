@@ -3,6 +3,7 @@ PRG            = mouse
 OBJ            = main.o mouse.o usrat.o ioconfig.o ps2.o c1351.o tdelay.o
 MCU_TARGET     = atmega8
 OPTIMIZE       = -O2
+BUILDNUM       = $(shell cat buildnum)
 
 DEFS           = -DF_CPU=8000000L -DMCU_TARGET=$(MCU_TARGET) -DVERSION=\"$(VERSION)\" -DBUILDNUM=\"$(BUILDNUM)\"
 LIBS           =
@@ -20,11 +21,15 @@ OBJCOPY        = avr-objcopy
 OBJDUMP        = avr-objdump
 DOXYGEN		   = doxygen
 
-all: $(PRG).elf lst text eeprom
+all: buildnum $(PRG).elf lst text eeprom
 
 doc:	doxygen
 
+buildnum:	./buildcount.sh
+	./buildcount.sh
+
 $(PRG).elf: $(OBJ)
+	BUILDNUM=$(shell ./buildcount.sh)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 clean:

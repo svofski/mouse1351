@@ -29,6 +29,12 @@ void usart_init(uint16_t baudval) {
 	(void)fdevopen(uart_putchar, NULL/*, 0*/);
 }
 
+//! \brief Disable USART completely
+void usart_stop() {
+    UCSRB = 0;
+    (void)fdevopen(NULL,NULL);
+}
+
 //! \brief putchar() for USART.
 //! \param data character to print.
 int uart_putchar(char data) {
