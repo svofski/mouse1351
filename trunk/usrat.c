@@ -10,6 +10,10 @@ static uint8_t rx_buffer[RX_BUFFER_SIZE];
 static volatile uint8_t rx_buffer_in;
 static volatile uint8_t rx_buffer_out;
 
+//! \brief a stub to use when usart is disabled
+static void uart_non(char data) {
+}
+
 //! \brief Initialize USART, perform fdevopen with uart_putchar.
 //! \param baudval (F_CPU/(16*baudrate))-1
 //! \sa uart_putchar()
@@ -32,7 +36,7 @@ void usart_init(uint16_t baudval) {
 //! \brief Disable USART completely
 void usart_stop() {
     UCSRB = 0;
-    (void)fdevopen(NULL,NULL);
+    (void)fdevopen(uart_non,NULL);
 }
 
 //! \brief putchar() for USART.
