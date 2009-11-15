@@ -161,8 +161,26 @@ ISR(INT1_vect) {
     OCR1B = ocr1b_load;
     
     // start timer with prescaler clk/8 (1 count = 1us)
-    TCCR1B = _BV(CS11);  
+    TCCR1B = _BV(CS11);
+    
+    //
+    TIMSK &= ~(_BV(OCIE1A) | _BV(OCIE1B));
+    TIMSK |= (ocr1a_load > ocr1b_load) ? _BV(OCIE1A) : _BV(OCIE1B);
 }
+
+
+ISR(TIMER1_COMPA_vect) {
+    TIMSK &= ~(_BV(OCIE1A) | _BV(OCIE1B));
+    TCCR1B = 0;
+
+    // assert OC1A/OC1B:
+    // 1. set output compare to set OC1A/OC1B ("11" in table 37 on page 97)
+    TCCR1A = _BV(COM1A1) | _BV(COM1A0) | _BV(COM1B1) | _BV(COM1B0);
+    // 2. force output compare to make it happen
+    TCCR1A |= _BV(FOC1A) | _BV(FOC1B);
+}
+
+ISR_ALIAS(TIMER1_COMPB_vect, TIMER1_COMPA_vect);
 
 /// TIMER1 Overflow vector
 ///
