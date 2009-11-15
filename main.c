@@ -77,7 +77,7 @@ int main() {
     
     usart_init(F_CPU/16/19200-1);
 	
-    printf_P(PSTR("\033[2J\033[H[M]AUS B%d (C)SVO 2009\n"), BUILDNUM);
+    printf_P(PSTR("\033[2J\033[H[M]AUS B%d (C)SVO 2009 PRESS @\n"), BUILDNUM);
 
     io_init();
 
@@ -124,7 +124,12 @@ int main() {
     // usart seems to be capable of giving trouble when left disconnected
     // if no characters appear in buffer by this moment, disable it 
     // completely just in case
-    if (!uart_available()) usart_stop();
+    
+    if (!uart_available()) {
+        usart_stop();
+    } else if (uart_getchar() != '@') {
+        usart_stop();
+    }
 
     printf_P(PSTR("hjkl to move, space = leftclick\n"));
     
@@ -152,7 +157,7 @@ int main() {
         
         // handle keyboard commands
         if (uart_available()) {
-            uart_putchar(byte = uart_getchar());
+            putchar(byte = uart_getchar());
             switch (byte) {                    
                 case 'h':   potmouse_movt(-1, 0, 0);
                             break;
