@@ -73,11 +73,11 @@ int main() {
     uint8_t vtpaint_on = 0;
     uint8_t joymode = 0;
     
-    const uint16_t zero = 320;
+    uint16_t zero = 320;
     
     usart_init(F_CPU/16/19200-1);
 	
-    printf_P(PSTR("\033[2J\033[H[M]AUS B%d (C)SVO 2009 PRESS @\n"), BUILDNUM);
+    printf_P(PSTR("\033[2J\033[H[M]AUS B%s (C)SVO 2009 PRESS @\n"), BUILDNUM);
 
     io_init();
 
@@ -158,7 +158,11 @@ int main() {
         // handle keyboard commands
         if (uart_available()) {
             putchar(byte = uart_getchar());
-            switch (byte) {                    
+            switch (byte) {             
+                case 'q':   potmouse_zero(--zero);
+                            break;       
+                case 'w':   potmouse_zero(++zero);
+                            break;
                 case 'h':   potmouse_movt(-1, 0, 0);
                             break;
                 case 'l':   potmouse_movt(1, 0, 0);
