@@ -1,4 +1,4 @@
-# mouse1351
+# ![](logo.png) mouse1351
 
 This is the firmware for [M]ouse, a PS/2 to Commodore C1351 mouse adapter. The adapter is 
 built using an ATmega8 microcontroller. The code is written in C and needs avr-gcc or WinAVR 
